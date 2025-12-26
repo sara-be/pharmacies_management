@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/app.js",
-  "dev": "nodemon backend/app.js",
+    "start": "nodemon backend/app.js",
+    "dev": "nodemon backend/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sara-be",
@@ -14,6 +14,8 @@
     "nodemon": "^3.1.11"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "pg": "^8.16.3"
   }
 }
