@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken');
 
 
 app.use(express.static(path.join(__dirname, '..', '../public')));
-const cookieParser = require("cookie-parser");
+app.use(express.json());
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 //Auth routes
     // ?Registration
 app.post('/auth/register', async (req, res) => {
@@ -17,7 +19,7 @@ app.post('/auth/register', async (req, res) => {
     'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, email',
     [name, email, hashedPassword]
   );
-  res.status(201).json({ message: 'Utilisateur créé', user: user.rows[0] });
+  res.status(201).json({ message: 'Utilisateur créé', user: user.rows[0]});
 });
 
     //?Login
@@ -40,12 +42,12 @@ app.post('/auth/login', async (req, res) => {
   
   res.cookie("access_token", token,{
     httpOnly:true,
-    secure:true,
+    secure:false,
     sameSite:"strict",
     maxAge: 60*60*1000
   });
 
-  res.json({ message: "Logged in" });
+  res.json({ message: "Logged in", token });
 });
 
     //?Logout
@@ -62,7 +64,7 @@ app.post("/logout", (req, res) => {
 
     //? auth middleware
 const authMiddleWare=(req, res, next)=>{
-  const token = req.cookies.access_token;
+  const token = req.cookies?.access_token;
   if (!token){
     return res.status(401).json({autenticated:false, message:"No token provided"});
   }
@@ -105,10 +107,10 @@ app.post('/pharmacy',authMiddleWare, async (req, res) => {
   try {
     const { name, address, city, phone, schedule, guard, delivery, status, image } = req.body;
     const result = await pool.query(
-      'INSERT INTO pharmacies (name, address, ville, telephone, horaire, garde, livraison, statut, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      'INSERT INTO pharmacies (nom, adresse, ville, telephone, horaires, garde, livraison, statut, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
       [name, address, city, phone, schedule, guard, delivery, status, image]
     );
-    res.json(result.rows[0]);
+    res.json({message:"added successfully",result:result.rows[0]});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -129,7 +131,7 @@ app.patch('/pharmacy/:id',authMiddleWare,async (req,res)=>{
         const {id} = req.params;
         const {name, address, city, phone, schedule, guard, delivery, status, image} = req.body;
         const result = await pool.query(
-            'UPDATE pharmacies SET name=$1, address=$2, ville=$3, telephone=$4, horaire=$5, garde=$6, livraison=$7, statut=$8, image=$9 WHERE id=$10 RETURNING *',
+            'UPDATE pharmacies SET nom=$1, adresse=$2, ville=$3, telephone=$4, horaires=$5, garde=$6, livraison=$7, statut=$8, image=$9 WHERE id=$10 RETURNING *',
             [name, address, city, phone, schedule, guard, delivery, status, image, id]
         );
         res.json(result.rows[0]);
@@ -139,6 +141,44 @@ app.patch('/pharmacy/:id',authMiddleWare,async (req,res)=>{
 });
 
 
+
+//Favorites manipulation
+app.get('/favorites', authMiddleWare, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM favorites WHERE user_id = $1', [req.user.id]);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/favorite', authMiddleWare, async (req, res) => {
+  try {
+    const { pharmacy_id } = req.body;
+    const result = await pool.query(
+      'INSERT INTO favorites (user_id, pharmacy_id) VALUES ($1, $2) RETURNING *',
+      [req.user.id, pharmacy_id]
+    );
+    res.json({message:"added successfully",result:result.rows[0]});
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/favorite/:id', authMiddleWare, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('DELETE FROM favorites WHERE id = $1 RETURNING *', [id]);
+    res.json({message:"deleted successfully",result:result.rows[0]});
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// app.patch('/favorite/:id', authMiddleWare, async (req, res) => {
+//   const { id } = req.params;
+//   const { pharmacy_id } = req.body;
+// });
 
 
 
