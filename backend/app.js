@@ -2,8 +2,80 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const pool = require('./db');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-app.use(express.static(path.join(__dirname, '..', 'public')));
+
+app.use(express.static(path.join(__dirname, '..', '../public')));
+const cookieParser = require("cookie-parser");
+//Auth routes
+    // ?Registration
+app.post('/auth/register', async (req, res) => {
+  const { name, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = await pool.query(
+    'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, email',
+    [name, email, hashedPassword]
+  );
+  res.status(201).json({ message: 'Utilisateur créé', user: user.rows[0] });
+});
+
+    //?Login
+app.post('/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  const user = userResult.rows[0];
+  if (!user) {
+    return res.status(404).json({ error: 'Utilisateur non trouvé' });
+  }
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ error: 'Mot de passe incorrect' });
+  }
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' }
+  );
+  
+  res.cookie("access_token", token,{
+    httpOnly:true,
+    secure:true,
+    sameSite:"strict",
+    maxAge: 60*60*1000
+  });
+
+  res.json({ message: "Logged in" });
+});
+
+    //?Logout
+app.post("/logout", (req, res) => {
+  res.clearCookie("access_token",
+    {
+      httpOnly: true,
+      secure:true,
+      sameSite:"strict"
+    }
+  );
+  res.status(200).json({ message: "Logged out successfully" });
+});
+
+    //? auth middleware
+const authMiddleWare=(req, res, next)=>{
+  const token = req.cookies.access_token;
+  if (!token){
+    return res.status(401).json({autenticated:false, message:"No token provided"});
+  }
+  try{
+    const decoded= jwt.verify(token, process.env.JWT_SECRET);
+    req.user= decoded;
+    next();
+  }catch{
+    return res.status(401).json({autenticated:false, message:"Invalid token"});
+  }
+};
+
+
 
 
 //Navigation routes
@@ -19,7 +91,7 @@ app.get('/contact',(req, res)=>{
 
 
 
-// Database manipulation
+// Pharmacies manipulation
 app.get('/pharmacies', async (req, res) => {
   try {
     const result = await pool.query('SELECT * from pharmacies');
@@ -29,7 +101,7 @@ app.get('/pharmacies', async (req, res) => {
   }
 });
 
-app.post('/pharmacy', async (req, res) => {
+app.post('/pharmacy',authMiddleWare, async (req, res) => {
   try {
     const { name, address, city, phone, schedule, guard, delivery, status, image } = req.body;
     const result = await pool.query(
@@ -42,6 +114,29 @@ app.post('/pharmacy', async (req, res) => {
   }
 });
 
+app.delete('/pharmacy/:id',authMiddleWare, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('DELETE FROM pharmacies WHERE id = $1 RETURNING *', [id]);
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.patch('/pharmacy/:id',authMiddleWare,async (req,res)=>{
+    try{
+        const {id} = req.params;
+        const {name, address, city, phone, schedule, guard, delivery, status, image} = req.body;
+        const result = await pool.query(
+            'UPDATE pharmacies SET name=$1, address=$2, ville=$3, telephone=$4, horaire=$5, garde=$6, livraison=$7, statut=$8, image=$9 WHERE id=$10 RETURNING *',
+            [name, address, city, phone, schedule, guard, delivery, status, image, id]
+        );
+        res.json(result.rows[0]);
+    }catch(error){
+        res.status(500).json({error: error.message});
+    }
+});
 
 
 
