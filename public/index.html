@@ -48,6 +48,34 @@
       </div>
     </div>
 
+    <!-- Search + City filter -->
+    <div class="mb-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+        <div class="flex-1 max-w-xl">
+          <label for="search" class="sr-only">Search pharmacies</label>
+          <div class="relative">
+            <input id="search" type="search" aria-label="Search pharmacies" placeholder="Search by name or address " class="w-full pl-12 pr-14 py-3 rounded-full bg-white/95 shadow-sm focus:shadow-md transition focus:outline-none focus:ring-2 focus:ring-emerald-300 placeholder-gray-500" />
+
+            <button id="clear-search" aria-label="Clear search" class="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hidden hover:bg-gray-100 bg-white/80">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button> 
+
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
+              <span id="search-count" class="ml-2 text-xs bg-emerald-600 text-white px-2 py-0.5 rounded hidden">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 sm:mt-0 flex items-center gap-2">
+          <label for="city-filter" class="sr-only">Filter by city</label>
+          <select id="city-filter" class="min-w-[160px] bg-white/95 px-3 py-2 rounded-md border border-white/30 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-300">
+            <option value="">All cities</option>
+          </select>
+          <button id="clear-city" class="hidden text-sm px-2 py-1 rounded bg-white/90 border text-gray-700 hover:bg-gray-100">Clear</button>
+        </div>
+      </div>
+    </div>
+
     <div id="loading" class="col-span-1 md:col-span-3 text-center py-10 hidden">
       <svg class="mx-auto h-8 w-8 text-emerald-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
       <div class="text-sm text-gray-600 mt-2">Loading pharmacies...</div>
@@ -63,7 +91,6 @@
       <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden shadow">
         <div class="p-4 border-b flex justify-between items-center">
           <h3 id="modal-title" class="text-lg font-semibold text-emerald-700">Pharmacy</h3>
-          <button id="modal-close" class="text-gray-500 hover:text-gray-700">✕</button>
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="col-span-1"><img id="modal-image" src="/images/icons/pharma_icon2.png" alt="logo" class="w-full h-40 object-cover rounded"></div>
@@ -94,8 +121,12 @@
     const refreshBtn = document.getElementById('refresh');
 
     let pharmacies = [];
+    let filteredPharmacies = [];
     let currentPage = 1;
     const pageSize = 6; 
+    let searchTerm = '';
+    let selectedCity = '';
+    let debounceTimer; 
 
     function createCard(ph) {
       const image = ph.image || '/images/icons/pharma_icon2.png';
@@ -130,14 +161,14 @@
     }
 
     function renderPage() {
-      const total = pharmacies.length;
+      const total = filteredPharmacies.length;
       const totalPages = Math.max(1, Math.ceil(total / pageSize));
       currentPage = Math.min(Math.max(1, currentPage), totalPages);
       const start = (currentPage - 1) * pageSize;
       const end = start + pageSize;
-      const pageItems = pharmacies.slice(start, end);
+      const pageItems = filteredPharmacies.slice(start, end);
 
-      itemsCountEl.textContent = total;
+      itemsCountEl.textContent = total; 
 
       if (pageItems.length === 0) {
         listEl.innerHTML = '<div class="col-span-1 md:col-span-3 text-center text-gray-600">No pharmacies found.</div>';
@@ -178,6 +209,8 @@
         })
         .then(data => {
           pharmacies = Array.isArray(data) ? data : [];
+          filteredPharmacies = pharmacies.slice();
+          populateCityFilter();
           renderPage();
         })
         .catch(err => {
@@ -188,6 +221,89 @@
     }
 
     refreshBtn?.addEventListener('click', () => { load(); });
+
+    // Search & filtering
+    const searchInput = document.getElementById('search');
+    const clearSearchBtn = document.getElementById('clear-search');
+    function applyFilter() {
+      const term = searchTerm;
+      const city = selectedCity;
+      filteredPharmacies = pharmacies.filter(ph => {
+        const name = (ph.name || '').toString().toLowerCase();
+        const address = ([ph.ville, ph.address, ph.city].filter(Boolean).join(' ')).toLowerCase();
+        const matchesSearch = !term || name.includes(term) || address.includes(term);
+        const cityVal = (ph.city || '').toString().toLowerCase();
+        const matchesCity = !city || city === '' || cityVal === city;
+        return matchesSearch && matchesCity;
+      });
+      currentPage = 1;
+      renderPage();
+      // update result badge
+      const searchCountEl = document.getElementById('search-count');
+      if (searchCountEl) {
+        if (term) {
+          searchCountEl.textContent = filteredPharmacies.length;
+          searchCountEl.classList.remove('hidden');
+        } else {
+          searchCountEl.classList.add('hidden');
+        }
+      }
+    }
+
+    searchInput?.addEventListener('input', (e) => {
+      const v = e.target.value;
+      if (v.trim()) {
+        // clearSearchBtn?.classList.remove('hidden');
+        document.getElementById('search-shortcut')?.classList.add('hidden');
+      } else {
+        // clearSearchBtn?.classList.add('hidden');
+        document.getElementById('search-shortcut')?.classList.remove('hidden');
+      }
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        searchTerm = v.trim().toLowerCase();
+        applyFilter();
+      }, 250);
+    });
+
+    clearSearchBtn?.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      searchTerm = '';
+    //   clearSearchBtn?.classList.add('hidden');
+      applyFilter();
+      searchInput?.focus();
+    });
+
+    // populate city dropdown
+    function populateCityFilter() {
+      const select = document.getElementById('city-filter');
+      const clearBtn = document.getElementById('clear-city');
+      if (!select) return;
+      const cities = Array.from(new Set(pharmacies.map(ph => (ph.ville || ph.city || '').toString().trim()).filter(Boolean)));
+      // clear and add default
+      select.innerHTML = '<option value="">All cities</option>' + cities.sort((a,b) => a.localeCompare(b)).map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
+      // keep selection if exists
+      if (selectedCity) select.value = selectedCity;
+      // toggle clear button visibility
+      if (clearBtn) {
+        if (selectedCity) clearBtn.classList.remove('hidden'); else clearBtn.classList.add('hidden');
+      }
+    }
+
+    const citySelect = document.getElementById('city-filter');
+    const clearCityBtn = document.getElementById('clear-city');
+    citySelect?.addEventListener('change', (e) => {
+      selectedCity = (e.target.value || '').toLowerCase();
+      if (selectedCity) clearCityBtn?.classList.remove('hidden'); else clearCityBtn?.classList.add('hidden');
+      applyFilter();
+    });
+    clearCityBtn?.addEventListener('click', () => {
+      if (citySelect) citySelect.value = '';
+      selectedCity = '';
+      clearCityBtn?.classList.add('hidden');
+      applyFilter();
+      citySelect?.focus();
+    });
 
     // Details modal
     function openModal(ph) {
@@ -220,7 +336,6 @@
         .then(data => {
           if (data?.authenticated) {
             addBtn?.classList.remove('hidden');
-            addBtn?.addEventListener('click', () => { alert('Add Pharmacy UI not implemented yet.'); });
           }
         })
         .catch(() => {
