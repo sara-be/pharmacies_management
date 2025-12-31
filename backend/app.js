@@ -4,12 +4,13 @@ const path = require('path');
 const pool = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-
-app.use(express.static(path.join(__dirname, '..', '../public')));
-app.use(express.json());
 const cookieParser = require('cookie-parser');
+
+
 app.use(cookieParser());
+const staticPath = path.join(__dirname, '..', 'public');
+app.use(express.static(staticPath));
+app.use(express.json());  
 //Auth routes
     // ?Registration
 app.post('/auth/register', async (req, res) => {
@@ -41,9 +42,9 @@ app.post('/auth/login', async (req, res) => {
   );
   
   res.cookie("access_token", token,{
-    httpOnly:true,
-    secure:false,
-    sameSite:"strict",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // use secure cookies in prod only
+    sameSite: "strict",
     maxAge: 60*60*1000
   });
 
@@ -66,16 +67,21 @@ app.post("/logout", (req, res) => {
 const authMiddleWare=(req, res, next)=>{
   const token = req.cookies?.access_token;
   if (!token){
-    return res.status(401).json({autenticated:false, message:"No token provided"});
+    return res.status(401).json({authenticated:false, message:"No token provided"});
   }
   try{
     const decoded= jwt.verify(token, process.env.JWT_SECRET);
     req.user= decoded;
     next();
-  }catch{
-    return res.status(401).json({autenticated:false, message:"Invalid token"});
+  }catch(err){
+    return res.status(401).json({authenticated:false, message:"Invalid token"});
   }
 };
+
+// Return current authenticated user
+app.get('/auth/me', authMiddleWare, (req, res) => {
+  res.json({ authenticated: true, user: req.user });
+});
 
 
 
@@ -107,7 +113,7 @@ app.post('/pharmacy',authMiddleWare, async (req, res) => {
   try {
     const { name, address, city, phone, schedule, guard, delivery, status, image } = req.body;
     const result = await pool.query(
-      'INSERT INTO pharmacies (nom, adresse, ville, telephone, horaires, garde, livraison, statut, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      'INSERT INTO pharmacies (name, address, city, phone, schedule, guard, delivery, status, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
       [name, address, city, phone, schedule, guard, delivery, status, image]
     );
     res.json({message:"added successfully",result:result.rows[0]});
@@ -131,7 +137,7 @@ app.patch('/pharmacy/:id',authMiddleWare,async (req,res)=>{
         const {id} = req.params;
         const {name, address, city, phone, schedule, guard, delivery, status, image} = req.body;
         const result = await pool.query(
-            'UPDATE pharmacies SET nom=$1, adresse=$2, ville=$3, telephone=$4, horaires=$5, garde=$6, livraison=$7, statut=$8, image=$9 WHERE id=$10 RETURNING *',
+            'UPDATE pharmacies SET name=$1, address=$2, city=$3, phone=$4, schedule=$5, guard=$6, delivery=$7, status=$8, image=$9 WHERE id=$10 RETURNING *',
             [name, address, city, phone, schedule, guard, delivery, status, image, id]
         );
         res.json(result.rows[0]);

@@ -4,10 +4,242 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/images/icons/pharma_icon2.png">
-    <meta>
     <title>Pharmacies Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Pharmacies Management System</h1>
+<body class="min-h-screen w-full bg-white relative text-gray-800">
+  <div class="fixed inset-0 z-0" style="background-image: radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #10b981 100%); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;"></div>
+<header class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="/" class="flex items-center gap-3">
+        <img src="/images/transparentBgLogo.png" alt="Logo" class="h-10 w-10">
+        <span class="font-semibold text-lg text-white">Pharmacies</span>
+      </a>
+      <nav class="hidden md:flex gap-6">
+        <a href="/" class="text-white hover:text-emerald-200">Home</a>
+        <a href="/about" class="text-white hover:text-emerald-200">About</a>
+        <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
+      </nav>
+
+      <div class="md:hidden">
+        <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobile-menu" class="md:hidden hidden pb-4 bg-emerald-50/80 rounded-b">
+      <a href="/" class="block py-2 text-emerald-700 hover:text-emerald-900">Home</a>
+      <a href="/about" class="block py-2 text-emerald-700 hover:text-emerald-900">About</a>
+      <a href="/contact" class="block py-2 text-emerald-700 hover:text-emerald-900">Contact</a>
+    </nav>
+  </div>
+</header> 
+
+<main class="relative z-10 max-w-6xl mx-auto px-4 pt-28">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-3xl font-bold text-emerald-700">Pharmacies Management System</h1>
+      <div class="flex items-center gap-3">
+        <div class="text-sm text-gray-700">Showing <span id="items-count">0</span> pharmacies</div>
+        <button id="refresh" class="hidden sm:inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Refresh</button>
+        <button id="add-pharmacy" class="hidden sm:inline-flex items-center gap-2 bg-emerald-700 text-white px-3 py-1 rounded-md hover:bg-emerald-800">Add Pharmacy</button>
+      </div>
+    </div>
+
+    <div id="loading" class="col-span-1 md:col-span-3 text-center py-10 hidden">
+      <svg class="mx-auto h-8 w-8 text-emerald-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
+      <div class="text-sm text-gray-600 mt-2">Loading pharmacies...</div>
+    </div>
+
+    <div id="pharmacies-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    </div>
+
+    <div id="pagination" class="m-8 flex items-center justify-center gap-3"></div>
+
+    <!-- Modal: Pharmacy details -->
+    <div id="pharmacy-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden shadow">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h3 id="modal-title" class="text-lg font-semibold text-emerald-700">Pharmacy</h3>
+          <button id="modal-close" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="col-span-1"><img id="modal-image" src="/images/icons/pharma_icon2.png" alt="logo" class="w-full h-40 object-cover rounded"></div>
+          <div class="col-span-2 space-y-2">
+             <p id="modal-address" class="text-sm text-gray-700"></p>
+             <p id="modal-phone" class="text-sm text-gray-700"></p>
+             <p id="modal-schedule" class="text-sm text-gray-700"></p>
+             <p id="modal-extra" class="text-sm text-gray-700"></p>
+          </div>
+        </div>
+        <div class="p-4 flex justify-end border-t">
+          <button id="modal-close-2" class="px-3 py-1 rounded bg-emerald-600 text-white">Close</button>
+        </div>
+      </div>
+    </div>
+</main> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+    const listEl = document.getElementById('pharmacies-list');
+    const paginationEl = document.getElementById('pagination');
+    const itemsCountEl = document.getElementById('items-count');
+    const loadingEl = document.getElementById('loading');
+    const refreshBtn = document.getElementById('refresh');
+
+    let pharmacies = [];
+    let currentPage = 1;
+    const pageSize = 6; 
+
+    function createCard(ph) {
+      const image = ph.image || '/images/icons/pharma_icon2.png';
+      const name = ph.nom || ph.name || 'Unnamed Pharmacy';
+      const address = [ph.adresse, ph.ville, ph.address, ph.city].filter(Boolean).join(', ');
+      const phone = ph.telephone || ph.phone || 'N/A';
+      const schedule = ph.horaire || ph.schedule || 'N/A';
+      const status = (ph.statut || ph.status || '').toLowerCase();
+      const guard = ph.garde || ph.guard ? 'Yes' : 'No';
+      const delivery = ph.livraison || ph.delivery ? 'Yes' : 'No';
+
+      return `
+        <div class="bg-white600/20 backdrop-blur-lg rounded-lg border border-white/30 ring-1 ring-emerald-50/20 overflow-hidden flex flex-col shadow-md hover:shadow-2xl transform transition hover:-translate-y-1 hover:scale-[1.01]">
+          <div class="h-40 bg-gradient-to-r from-emerald-50/40 to-white/80 flex items-center justify-center overflow-hidden border-b border-white/30">
+            <img src="${image}" alt="${name}" class="object-cover w-full h-full">
+          </div>
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="text-lg font-semibold mb-1 text-gray-900">${name}</h3>
+            <p class="text-sm text-gray-700 mb-2">${address}</p>
+            <div class="mt-auto text-sm text-gray-700 space-y-1">
+              <div><strong>Phone:</strong> ${phone}</div>
+              <div><strong>Hours:</strong> ${schedule}</div>
+              <div><strong>Guard:</strong> ${guard} · <strong>Delivery:</strong> ${delivery}</div>
+            </div>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="inline-block px-2 py-1 text-xs font-medium rounded ${status === 'ouvert' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${status || 'unknown'}</span>
+              <button class="details-btn inline-flex items-center gap-2 bg-emerald-600 text-white text-sm px-3 py-1 rounded hover:bg-emerald-700" data-id="${ph.id}">Details</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPage() {
+      const total = pharmacies.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      currentPage = Math.min(Math.max(1, currentPage), totalPages);
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      const pageItems = pharmacies.slice(start, end);
+
+      itemsCountEl.textContent = total;
+
+      if (pageItems.length === 0) {
+        listEl.innerHTML = '<div class="col-span-1 md:col-span-3 text-center text-gray-600">No pharmacies found.</div>';
+      } else {
+        listEl.innerHTML = pageItems.map(createCard).join('');
+      }
+
+      // pagination
+      let pagHtml = '';
+      if (totalPages > 1) {
+        pagHtml += `<button class="px-3 py-1 rounded bg-white/90 border" data-page="prev"><</button>`;
+        for (let i = 1; i <= totalPages; i++) {
+          pagHtml += `<button class="px-3 py-1 rounded ${i===currentPage? 'bg-emerald-600 text-white' : 'bg-white/90 border text-gray-700'}" data-page="${i}">${i}</button>`;
+        }
+        pagHtml += `<button class="px-3 py-1 rounded bg-white/90 border" data-page="next">></button>`;
+      }
+      paginationEl.innerHTML = pagHtml;
+
+      // attach events
+      paginationEl.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const p = btn.getAttribute('data-page');
+          if (p === 'prev') currentPage = Math.max(1, currentPage - 1);
+          else if (p === 'next') currentPage = Math.min(totalPages, currentPage + 1);
+          else currentPage = Number(p);
+          renderPage();
+        });
+      });
+    }
+
+    function load() {
+      loadingEl.classList.remove('hidden');
+      listEl.innerHTML = '';
+      fetch('/pharmacies')
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to fetch');
+          return res.json();
+        })
+        .then(data => {
+          pharmacies = Array.isArray(data) ? data : [];
+          renderPage();
+        })
+        .catch(err => {
+          console.error(err);
+          listEl.innerHTML = '<div class="col-span-1 md:col-span-3 text-center text-rose-600">Error loading pharmacies.</div>';
+        })
+        .finally(() => loadingEl.classList.add('hidden'));
+    }
+
+    refreshBtn?.addEventListener('click', () => { load(); });
+
+    // Details modal
+    function openModal(ph) {
+      if (!ph) return;
+      document.getElementById('modal-title').textContent = ph.nom || ph.name || 'Pharmacy';
+      document.getElementById('modal-image').src = ph.image || '/images/icons/pharma_icon2.png';
+      document.getElementById('modal-address').innerHTML = `<strong>Address:</strong> ${[ph.adresse, ph.ville, ph.address, ph.city].filter(Boolean).join(', ')}`;
+      document.getElementById('modal-phone').innerHTML = `<strong>Phone:</strong> ${ph.telephone || ph.phone || 'N/A'}`;
+      document.getElementById('modal-schedule').innerHTML = `<strong>Hours:</strong> ${ph.horaire || ph.schedule || 'N/A'}`;
+      document.getElementById('modal-extra').innerHTML = `<strong>Guard:</strong> ${ph.garde || ph.guard ? 'Yes' : 'No'} · <strong>Delivery:</strong> ${ph.livraison || ph.delivery ? 'Yes' : 'No'} · <strong>Status:</strong> ${ph.statut || ph.status || 'unknown'}`;
+      document.getElementById('pharmacy-modal').classList.remove('hidden');
+      document.getElementById('pharmacy-modal').classList.add('flex');
+    }
+    function closeModal() {
+      document.getElementById('pharmacy-modal').classList.add('hidden');
+      document.getElementById('pharmacy-modal').classList.remove('flex');
+    }
+    document.getElementById('modal-close')?.addEventListener('click', closeModal);
+    document.getElementById('modal-close-2')?.addEventListener('click', closeModal);
+    document.getElementById('pharmacy-modal')?.addEventListener('click', (e) => { if (e.target.id === 'pharmacy-modal') closeModal(); });
+
+    // Show Add button only for authenticated users
+    const addBtn = document.getElementById('add-pharmacy');
+    function checkAuth() {
+      fetch('/auth/me')
+        .then(r => {
+          if (!r.ok) throw new Error('Unauthenticated');
+          return r.json();
+        })
+        .then(data => {
+          if (data?.authenticated) {
+            addBtn?.classList.remove('hidden');
+            addBtn?.addEventListener('click', () => { alert('Add Pharmacy UI not implemented yet.'); });
+          }
+        })
+        .catch(() => {
+          // not authenticated -> keep add button hidden
+        });
+    }
+
+    // Attach details button listeners via event delegation
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.details-btn');
+      if (!btn) return;
+      const id = btn.getAttribute('data-id');
+      const ph = pharmacies.find(p => String(p.id) === String(id));
+      openModal(ph);
+    });
+
+    checkAuth();
+    load();
+  });
+</script>
 </body>
 </html>
