@@ -1,50 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/images/icons/pharma_icon2.png">
-    <title>Pharmacies Management System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/icons/pharma_icon2.png">
+  <title>Pharmacies Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen w-full bg-white relative text-gray-800">
-  <div class="fixed inset-0 z-0" style="background-image: radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #10b981 100%); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;"></div>
-<header class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-50">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="flex items-center justify-between h-16">
-      <a href="/" class="flex items-center gap-3">
-        <img src="/images/transparentBgLogo.png" alt="Logo" class="h-10 w-10">
-        <span class="font-semibold text-lg text-white">Pharmacies</span>
-      </a>
-      <nav class="hidden md:flex gap-6">
-        <a href="/" class="text-white hover:text-emerald-200">Home</a>
-        <a href="/about" class="text-white hover:text-emerald-200">About</a>
-        <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
-      </nav>
-
-      <div class="md:hidden">
-        <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80" aria-label="Toggle navigation">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <nav id="mobile-menu" class="md:hidden hidden pb-4 bg-emerald-50/80 rounded-b">
-      <a href="/" class="block py-2 text-emerald-700 hover:text-emerald-900">Home</a>
-      <a href="/about" class="block py-2 text-emerald-700 hover:text-emerald-900">About</a>
-      <a href="/contact" class="block py-2 text-emerald-700 hover:text-emerald-900">Contact</a>
-    </nav>
+  <div class="fixed inset-0 z-0"
+    style="background-image: radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #10b981 100%); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
   </div>
-</header> 
+  <header
+    class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center h-16 w-full">
+        <div class="flex items-center gap-3">
+          <a href="/" class="flex items-center gap-3">
+            <img src="/images/transparentBgLogo.png" alt="Logo" class="h-10 w-10">
+            <span class="font-semibold text-lg text-white">Pharmacies</span>
+          </a>
+        </div>
 
-<main class="relative z-10 max-w-6xl mx-auto px-4 pt-28">
+        <nav class="hidden md:flex gap-6 mx-auto">
+          <a href="/" class="text-white hover:text-emerald-200">Home</a>
+          <a href="/about" class="text-white hover:text-emerald-200">About</a>
+          <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <div class="hidden md:flex items-center gap-2">
+            <button id="login-btn"
+              class="inline-flex items-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white">Login</button>
+            <button id="register-btn"
+              class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Sign
+              up</button>
+            <button id="logout-btn"
+              class="hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 px-3 py-1 rounded-md hover:bg-rose-50">Logout</button>
+            <span id="user-badge" class="hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
+          </div>
+          <div class="md:hidden">
+            <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80"
+              aria-label="Toggle navigation">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav id="mobile-menu" class="md:hidden hidden pb-4 bg-emerald-50/80 rounded-b">
+        <a href="/" class="block py-2 text-emerald-700 hover:text-emerald-900">Home</a>
+        <a href="/about" class="block py-2 text-emerald-700 hover:text-emerald-900">About</a>
+        <a href="/contact" class="block py-2 text-emerald-700 hover:text-emerald-900">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-6xl mx-auto px-4 pt-28">
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-3xl font-bold text-emerald-700">Pharmacies Management System</h1>
       <div class="flex items-center gap-3">
-        <div class="text-sm text-gray-700">Showing <span id="items-count">0</span> pharmacies</div>
-        <button id="refresh" class="hidden sm:inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Refresh</button>
-        <button id="add-pharmacy" class="hidden sm:inline-flex items-center gap-2 bg-emerald-700 text-white px-3 py-1 rounded-md hover:bg-emerald-800">Add Pharmacy</button>
+        <!-- <div class="text-sm text-gray-700">Showing <span id="items-count">0</span> pharmacies</div> -->
+        <!-- <button id="refresh" class="hidden sm:inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Refresh</button> -->
+        <button id="add-pharmacy" class="auth-only hidden inline-flex items-center gap-2 bg-emerald-700 text-white px-3 py-1 rounded-md hover:bg-emerald-800">Add Pharmacy</button>
       </div>
     </div>
 
@@ -54,11 +76,17 @@
         <div class="flex-1 max-w-xl">
           <label for="search" class="sr-only">Search pharmacies</label>
           <div class="relative">
-            <input id="search" type="search" aria-label="Search pharmacies" placeholder="Search by name or address " class="w-full pl-12 pr-14 py-3 rounded-full bg-white/95 shadow-sm focus:shadow-md transition focus:outline-none focus:ring-2 focus:ring-emerald-300 placeholder-gray-500" />
+            <input id="search" type="search" aria-label="Search pharmacies" placeholder="Search by name or address "
+              class="w-full pl-12 pr-14 py-3 rounded-full bg-white/95 shadow-sm focus:shadow-md transition focus:outline-none focus:ring-2 focus:ring-emerald-300 placeholder-gray-500" />
 
-            <button id="clear-search" aria-label="Clear search" class="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hidden hover:bg-gray-100 bg-white/80">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-            </button> 
+            <button id="clear-search" aria-label="Clear search"
+              class="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hidden hover:bg-gray-100 bg-white/80">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
 
             <div class="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
               <span id="search-count" class="ml-2 text-xs bg-emerald-600 text-white px-2 py-0.5 rounded hidden">0</span>
@@ -68,16 +96,22 @@
 
         <div class="mt-3 sm:mt-0 flex items-center gap-2">
           <label for="city-filter" class="sr-only">Filter by city</label>
-          <select id="city-filter" class="min-w-[160px] bg-white/95 px-3 py-2 rounded-md border border-white/30 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-300">
+          <select id="city-filter"
+            class="min-w-[160px] bg-white/95 px-3 py-2 rounded-md border border-white/30 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-300">
             <option value="">All cities</option>
           </select>
-          <button id="clear-city" class="hidden text-sm px-2 py-1 rounded bg-white/90 border text-gray-700 hover:bg-gray-100">Clear</button>
+          <button id="clear-city"
+            class="hidden text-sm px-2 py-1 rounded bg-white/90 border text-gray-700 hover:bg-gray-100">Clear</button>
         </div>
       </div>
     </div>
 
     <div id="loading" class="col-span-1 md:col-span-3 text-center py-10 hidden">
-      <svg class="mx-auto h-8 w-8 text-emerald-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
+      <svg class="mx-auto h-8 w-8 text-emerald-600 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
       <div class="text-sm text-gray-600 mt-2">Loading pharmacies...</div>
     </div>
 
@@ -93,12 +127,13 @@
           <h3 id="modal-title" class="text-lg font-semibold text-emerald-700">Pharmacy</h3>
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="col-span-1"><img id="modal-image" src="/images/icons/pharma_icon2.png" alt="logo" class="w-full h-40 object-cover rounded"></div>
+          <div class="col-span-1"><img id="modal-image" src="/images/icons/pharma_icon2.png" alt="logo"
+              class="w-full h-40 object-cover rounded"></div>
           <div class="col-span-2 space-y-2">
-             <p id="modal-address" class="text-sm text-gray-700"></p>
-             <p id="modal-phone" class="text-sm text-gray-700"></p>
-             <p id="modal-schedule" class="text-sm text-gray-700"></p>
-             <p id="modal-extra" class="text-sm text-gray-700"></p>
+            <p id="modal-address" class="text-sm text-gray-700"></p>
+            <p id="modal-phone" class="text-sm text-gray-700"></p>
+            <p id="modal-schedule" class="text-sm text-gray-700"></p>
+            <p id="modal-extra" class="text-sm text-gray-700"></p>
           </div>
         </div>
         <div class="p-4 flex justify-end border-t">
@@ -106,39 +141,152 @@
         </div>
       </div>
     </div>
-</main> 
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('nav-toggle');
-    const menu = document.getElementById('mobile-menu');
-    btn?.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+    <!-- Modal: Add / Edit Pharmacy Form -->
+    <div id="pharmacy-form-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-full max-w-2xl mx-4 overflow-hidden shadow">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h3 id="form-modal-title" class="text-lg font-semibold text-emerald-700 ">Add Pharmacy</h3>
+          <button id="form-modal-close" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+        <form id="pharmacy-form" class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="hidden" id="pharmacy-id" />
+          <div>
+            <label class="text-sm font-medium text-gray-700">Name</label>
+            <input id="ph-name" required class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-gray-700">City</label>
+            <input id="ph-city" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium text-gray-700">Address</label>
+            <input id="ph-address" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-gray-700">Phone</label>
+            <input id="ph-phone" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-gray-700">Hours / Schedule</label>
+            <input id="ph-schedule" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-gray-700">Status</label>
+            <select id="ph-status" class="mt-1 w-full px-3 py-2 border rounded-md">
+              <option value="">Select...</option>
+              <option value="ouvert">Open</option>
+              <option value="ferme">Closed</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-4">
+            <label class="flex items-center gap-2"><input id="ph-guard" type="checkbox" /> <span
+                class="text-sm">Guard</span></label>
+            <label class="flex items-center gap-2"><input id="ph-delivery" type="checkbox" /> <span
+                class="text-sm">Delivery</span></label>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium text-gray-700">Image URL</label>
+            <input id="ph-image" class="mt-1 w-full px-3 py-2 border rounded-md" placeholder="Optional image URL" />
+          </div>
 
-    const listEl = document.getElementById('pharmacies-list');
-    const paginationEl = document.getElementById('pagination');
-    const itemsCountEl = document.getElementById('items-count');
-    const loadingEl = document.getElementById('loading');
-    const refreshBtn = document.getElementById('refresh');
+          <div class="md:col-span-2 flex items-center justify-end gap-2 mt-4">
+            <button type="button" id="ph-form-cancel" class="px-3 py-1 rounded border">Cancel</button>
+            <button type="submit" id="ph-form-save" class="px-4 py-2 rounded bg-emerald-600 text-white">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-    let pharmacies = [];
-    let filteredPharmacies = [];
-    let currentPage = 1;
-    const pageSize = 6; 
-    let searchTerm = '';
-    let selectedCity = '';
-    let debounceTimer; 
+    <!-- Modal: Login -->
+    <div id="login-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden shadow">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h3 class="text-lg font-semibold text-emerald-700">Login</h3>
+          <button id="login-close" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+        <form id="login-form" class="p-4 space-y-3">
+          <div>
+            <label class="text-sm">Email</label>
+            <input id="login-email" required type="email" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm">Password</label>
+            <input id="login-password" required type="password" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" id="login-cancel" class="px-3 py-1 rounded border">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded bg-emerald-600 text-white">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-    function createCard(ph) {
-      const image = ph.image || '/images/icons/pharma_icon2.png';
-      const name = ph.nom || ph.name || 'Unnamed Pharmacy';
-      const address = [ph.adresse, ph.ville, ph.address, ph.city].filter(Boolean).join(', ');
-      const phone = ph.telephone || ph.phone || 'N/A';
-      const schedule = ph.horaire || ph.schedule || 'N/A';
-      const status = (ph.statut || ph.status || '').toLowerCase();
-      const guard = ph.garde || ph.guard ? 'Yes' : 'No';
-      const delivery = ph.livraison || ph.delivery ? 'Yes' : 'No';
+    <!-- Modal: Register -->
+    <div id="register-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden shadow">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h3 class="text-lg font-semibold text-emerald-700">Register</h3>
+          <button id="register-close" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+        <form id="register-form" class="p-4 space-y-3">
+          <div>
+            <label class="text-sm">Name</label>
+            <input id="reg-name" required class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm">Email</label>
+            <input id="reg-email" required type="email" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm">Password</label>
+            <input id="reg-password" required type="password" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" id="register-cancel" class="px-3 py-1 rounded border">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded bg-emerald-600 text-white">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-      return `
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const API_BASE_URL = (window.location.protocol === 'file:' || window.location.port === '5500')
+        ? 'http://localhost:4000'
+        : '';
+
+      const btn = document.getElementById('nav-toggle');
+      const menu = document.getElementById('mobile-menu');
+      btn?.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+      const listEl = document.getElementById('pharmacies-list');
+      const paginationEl = document.getElementById('pagination');
+      const itemsCountEl = document.getElementById('items-count');
+      const loadingEl = document.getElementById('loading');
+      // const refreshBtn = document.getElementById('refresh');
+
+      let pharmacies = [];
+      let filteredPharmacies = [];
+      let currentPage = 1;
+      const pageSize = 6;
+      let searchTerm = '';
+      let selectedCity = '';
+      let debounceTimer;
+
+      function createCard(ph) {
+        const image = ph.image || '/images/icons/pharma_icon2.png';
+        const name = ph.nom || ph.name || 'Unnamed Pharmacy';
+        const address = [ph.adresse, ph.ville, ph.address, ph.city].filter(Boolean).join(', ');
+        const phone = ph.telephone || ph.phone || 'N/A';
+        const schedule = ph.horaire || ph.schedule || 'N/A';
+        const status = (ph.statut || ph.status || '').toLowerCase();
+        const guard = ph.garde || ph.guard ? 'Yes' : 'No';
+        const delivery = ph.livraison || ph.delivery ? 'Yes' : 'No';
+
+        return `
         <div class="bg-white600/20 backdrop-blur-lg rounded-lg border border-white/30 ring-1 ring-emerald-50/20 overflow-hidden flex flex-col shadow-md hover:shadow-2xl transform transition hover:-translate-y-1 hover:scale-[1.01]">
           <div class="h-40 bg-gradient-to-r from-emerald-50/40 to-white/80 flex items-center justify-center overflow-hidden border-b border-white/30">
             <img src="${image}" alt="${name}" class="object-cover w-full h-full">
@@ -151,210 +299,388 @@
               <div><strong>Hours:</strong> ${schedule}</div>
               <div><strong>Guard:</strong> ${guard} · <strong>Delivery:</strong> ${delivery}</div>
             </div>
-            <div class="mt-3 flex items-center justify-between">
+            <div class="mt-3 flex items-center justify-between gap-2">
               <span class="inline-block px-2 py-1 text-xs font-medium rounded ${status === 'ouvert' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${status || 'unknown'}</span>
-              <button class="details-btn inline-flex items-center gap-2 bg-emerald-600 text-white text-sm px-3 py-1 rounded hover:bg-emerald-700" data-id="${ph.id}">Details</button>
+              <div class="flex items-center gap-2">
+                <button class="details-btn inline-flex items-center gap-2 bg-emerald-600 text-white text-sm px-3 py-1 rounded hover:bg-emerald-700" data-id="${ph.id}">Details</button>
+                <button class="edit-btn auth-only hidden inline-flex items-center gap-2 bg-white text-emerald-700 text-sm px-3 py-1 rounded border hover:bg-emerald-50" data-id="${ph.id}">Edit</button>
+                <button class="delete-btn auth-only hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 text-sm px-3 py-1 rounded hover:bg-rose-50" data-id="${ph.id}">Delete</button>
+              </div>
             </div>
           </div>
         </div>
       `;
-    }
-
-    function renderPage() {
-      const total = filteredPharmacies.length;
-      const totalPages = Math.max(1, Math.ceil(total / pageSize));
-      currentPage = Math.min(Math.max(1, currentPage), totalPages);
-      const start = (currentPage - 1) * pageSize;
-      const end = start + pageSize;
-      const pageItems = filteredPharmacies.slice(start, end);
-
-      itemsCountEl.textContent = total; 
-
-      if (pageItems.length === 0) {
-        listEl.innerHTML = '<div class="col-span-1 md:col-span-3 text-center text-gray-600">No pharmacies found.</div>';
-      } else {
-        listEl.innerHTML = pageItems.map(createCard).join('');
       }
 
-      // pagination
-      let pagHtml = '';
-      if (totalPages > 1) {
-        pagHtml += `<button class="px-3 py-1 rounded bg-white/90 border" data-page="prev"><</button>`;
-        for (let i = 1; i <= totalPages; i++) {
-          pagHtml += `<button class="px-3 py-1 rounded ${i===currentPage? 'bg-emerald-600 text-white' : 'bg-white/90 border text-gray-700'}" data-page="${i}">${i}</button>`;
-        }
-        pagHtml += `<button class="px-3 py-1 rounded bg-white/90 border" data-page="next">></button>`;
-      }
-      paginationEl.innerHTML = pagHtml;
+      function renderPage() {
+        const total = filteredPharmacies.length;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        currentPage = Math.min(Math.max(1, currentPage), totalPages);
+        const start = (currentPage - 1) * pageSize;
+        const end = start + pageSize;
+        const pageItems = filteredPharmacies.slice(start, end);
 
-      // attach events
-      paginationEl.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const p = btn.getAttribute('data-page');
-          if (p === 'prev') currentPage = Math.max(1, currentPage - 1);
-          else if (p === 'next') currentPage = Math.min(totalPages, currentPage + 1);
-          else currentPage = Number(p);
-          renderPage();
-        });
-      });
-    }
+        if (itemsCountEl) itemsCountEl.textContent = total;
 
-    function load() {
-      loadingEl.classList.remove('hidden');
-      listEl.innerHTML = '';
-      fetch('/pharmacies')
-        .then(res => {
-          if (!res.ok) throw new Error('Failed to fetch');
-          return res.json();
-        })
-        .then(data => {
-          pharmacies = Array.isArray(data) ? data : [];
-          filteredPharmacies = pharmacies.slice();
-          populateCityFilter();
-          renderPage();
-        })
-        .catch(err => {
-          console.error(err);
-          listEl.innerHTML = '<div class="col-span-1 md:col-span-3 text-center text-rose-600">Error loading pharmacies.</div>';
-        })
-        .finally(() => loadingEl.classList.add('hidden'));
-    }
-
-    refreshBtn?.addEventListener('click', () => { load(); });
-
-    // Search & filtering
-    const searchInput = document.getElementById('search');
-    const clearSearchBtn = document.getElementById('clear-search');
-    function applyFilter() {
-      const term = searchTerm;
-      const city = selectedCity;
-      filteredPharmacies = pharmacies.filter(ph => {
-        const name = (ph.name || '').toString().toLowerCase();
-        const address = ([ph.ville, ph.address, ph.city].filter(Boolean).join(' ')).toLowerCase();
-        const matchesSearch = !term || name.includes(term) || address.includes(term);
-        const cityVal = (ph.city || '').toString().toLowerCase();
-        const matchesCity = !city || city === '' || cityVal === city;
-        return matchesSearch && matchesCity;
-      });
-      currentPage = 1;
-      renderPage();
-      // update result badge
-      const searchCountEl = document.getElementById('search-count');
-      if (searchCountEl) {
-        if (term) {
-          searchCountEl.textContent = filteredPharmacies.length;
-          searchCountEl.classList.remove('hidden');
+        if (pageItems.length === 0) {
+          listEl.innerHTML = '<div class="col-span-1 md:col-span-3 text-center text-gray-600">No pharmacies found.</div>';
         } else {
-          searchCountEl.classList.add('hidden');
+          listEl.innerHTML = pageItems.map(createCard).join('');
+        }
+
+        // pagination
+        let pagHtml = '';
+        if (totalPages > 1) {
+          pagHtml += `<button class="px-3 py-1 rounded bg-white/90 border" data-page="prev"><</button>`;
+          for (let i = 1; i <= totalPages; i++) {
+            pagHtml += `<button class="px-3 py-1 rounded ${i === currentPage ? 'bg-emerald-600 text-white' : 'bg-white/90 border text-gray-700'}" data-page="${i}">${i}</button>`;
+          }
+          pagHtml += `<button class="px-3 py-1 rounded bg-white/90 border" data-page="next">></button>`;
+        }
+        if (paginationEl) {
+          paginationEl.innerHTML = pagHtml;
+
+          // attach events
+          paginationEl.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const p = btn.getAttribute('data-page');
+              if (p === 'prev') currentPage = Math.max(1, currentPage - 1);
+              else if (p === 'next') currentPage = Math.min(totalPages, currentPage + 1);
+              else currentPage = Number(p);
+              renderPage();
+            });
+          });
+        }
+
+        // reveal auth-only buttons if user is authenticated (rendered after cards are in DOM)
+        if (isAuthenticated) {
+          document.querySelectorAll('.auth-only').forEach(e => e.classList.remove('hidden'));
         }
       }
-    }
 
-    searchInput?.addEventListener('input', (e) => {
-      const v = e.target.value;
-      if (v.trim()) {
-        // clearSearchBtn?.classList.remove('hidden');
-        document.getElementById('search-shortcut')?.classList.add('hidden');
-      } else {
-        // clearSearchBtn?.classList.add('hidden');
-        document.getElementById('search-shortcut')?.classList.remove('hidden');
+      function load() {
+        loadingEl.classList.remove('hidden');
+        listEl.innerHTML = '';
+        fetch(`${API_BASE_URL}/pharmacies`)
+          .then(res => {
+            if (!res.ok) throw new Error('Failed to fetch');
+            return res.json();
+          })
+          .then(data => {
+            pharmacies = Array.isArray(data) ? data : [];
+            //   console.log(data);
+
+            filteredPharmacies = pharmacies.slice();
+            populateCityFilter();
+            renderPage();
+          })
+          .catch(err => {
+            console.error(err);
+            listEl.innerHTML = `
+              <div class="col-span-1 md:col-span-3 text-center text-rose-600">
+                <div class="font-semibold">Error loading pharmacies.</div>
+                <div class="text-sm mt-2">${err?.message || 'Network or server error'}</div>
+                <div class="text-xs text-gray-500 mt-1">Make sure the backend server is running on http://localhost:4000</div>
+                <div class="mt-3">
+                  <button id="retry-fetch" class="px-3 py-1 rounded bg-emerald-600 text-white">Retry</button>
+                </div>
+              </div>
+            `;
+            // attach retry handler
+            const retryBtn = listEl.querySelector('#retry-fetch');
+            if (retryBtn) retryBtn.addEventListener('click', () => { load(); });
+          })
+          .finally(() => loadingEl.classList.add('hidden'));
       }
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        searchTerm = v.trim().toLowerCase();
-        applyFilter();
-      }, 250);
-    });
 
-    clearSearchBtn?.addEventListener('click', () => {
-      if (searchInput) searchInput.value = '';
-      searchTerm = '';
-    //   clearSearchBtn?.classList.add('hidden');
-      applyFilter();
-      searchInput?.focus();
-    });
+      // refreshBtn?.addEventListener('click', () => { load(); });
 
-    // populate city dropdown
-    function populateCityFilter() {
-      const select = document.getElementById('city-filter');
-      const clearBtn = document.getElementById('clear-city');
-      if (!select) return;
-      const cities = Array.from(new Set(pharmacies.map(ph => (ph.ville || ph.city || '').toString().trim()).filter(Boolean)));
-      // clear and add default
-      select.innerHTML = '<option value="">All cities</option>' + cities.sort((a,b) => a.localeCompare(b)).map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
-      // keep selection if exists
-      if (selectedCity) select.value = selectedCity;
-      // toggle clear button visibility
-      if (clearBtn) {
-        if (selectedCity) clearBtn.classList.remove('hidden'); else clearBtn.classList.add('hidden');
-      }
-    }
-
-    const citySelect = document.getElementById('city-filter');
-    const clearCityBtn = document.getElementById('clear-city');
-    citySelect?.addEventListener('change', (e) => {
-      selectedCity = (e.target.value || '').toLowerCase();
-      if (selectedCity) clearCityBtn?.classList.remove('hidden'); else clearCityBtn?.classList.add('hidden');
-      applyFilter();
-    });
-    clearCityBtn?.addEventListener('click', () => {
-      if (citySelect) citySelect.value = '';
-      selectedCity = '';
-      clearCityBtn?.classList.add('hidden');
-      applyFilter();
-      citySelect?.focus();
-    });
-
-    // Details modal
-    function openModal(ph) {
-      if (!ph) return;
-      document.getElementById('modal-title').textContent = ph.nom || ph.name || 'Pharmacy';
-      document.getElementById('modal-image').src = ph.image || '/images/icons/pharma_icon2.png';
-      document.getElementById('modal-address').innerHTML = `<strong>Address:</strong> ${[ph.adresse, ph.ville, ph.address, ph.city].filter(Boolean).join(', ')}`;
-      document.getElementById('modal-phone').innerHTML = `<strong>Phone:</strong> ${ph.telephone || ph.phone || 'N/A'}`;
-      document.getElementById('modal-schedule').innerHTML = `<strong>Hours:</strong> ${ph.horaire || ph.schedule || 'N/A'}`;
-      document.getElementById('modal-extra').innerHTML = `<strong>Guard:</strong> ${ph.garde || ph.guard ? 'Yes' : 'No'} · <strong>Delivery:</strong> ${ph.livraison || ph.delivery ? 'Yes' : 'No'} · <strong>Status:</strong> ${ph.statut || ph.status || 'unknown'}`;
-      document.getElementById('pharmacy-modal').classList.remove('hidden');
-      document.getElementById('pharmacy-modal').classList.add('flex');
-    }
-    function closeModal() {
-      document.getElementById('pharmacy-modal').classList.add('hidden');
-      document.getElementById('pharmacy-modal').classList.remove('flex');
-    }
-    document.getElementById('modal-close')?.addEventListener('click', closeModal);
-    document.getElementById('modal-close-2')?.addEventListener('click', closeModal);
-    document.getElementById('pharmacy-modal')?.addEventListener('click', (e) => { if (e.target.id === 'pharmacy-modal') closeModal(); });
-
-    // Show Add button only for authenticated users
-    const addBtn = document.getElementById('add-pharmacy');
-    function checkAuth() {
-      fetch('/auth/me')
-        .then(r => {
-          if (!r.ok) throw new Error('Unauthenticated');
-          return r.json();
-        })
-        .then(data => {
-          if (data?.authenticated) {
-            addBtn?.classList.remove('hidden');
-          }
-        })
-        .catch(() => {
-          // not authenticated -> keep add button hidden
+      // Search & filtering
+      const searchInput = document.getElementById('search');
+      const clearSearchBtn = document.getElementById('clear-search');
+      function applyFilter() {
+        const term = searchTerm;
+        const city = selectedCity;
+        filteredPharmacies = pharmacies.filter(ph => {
+          const name = (ph.name || '').toString().toLowerCase();
+          const address = ([ph.ville, ph.address, ph.city].filter(Boolean).join(' ')).toLowerCase();
+          const matchesSearch = !term || name.includes(term) || address.includes(term);
+          const cityVal = (ph.city || '').toString().toLowerCase();
+          const matchesCity = !city || city === '' || cityVal === city;
+          return matchesSearch && matchesCity;
         });
-    }
+        currentPage = 1;
+        renderPage();
+        // update result badge
+        const searchCountEl = document.getElementById('search-count');
+        if (searchCountEl) {
+          if (term) {
+            searchCountEl.textContent = filteredPharmacies.length;
+            searchCountEl.classList.remove('hidden');
+          } else {
+            searchCountEl.classList.add('hidden');
+          }
+        }
+      }
 
-    // Attach details button listeners via event delegation
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.details-btn');
-      if (!btn) return;
-      const id = btn.getAttribute('data-id');
-      const ph = pharmacies.find(p => String(p.id) === String(id));
-      openModal(ph);
+      searchInput?.addEventListener('input', (e) => {
+        const v = e.target.value;
+        if (v.trim()) {
+          clearSearchBtn?.classList.remove('hidden');
+        } else {
+          clearSearchBtn?.classList.add('hidden');
+        }
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          searchTerm = v.trim().toLowerCase();
+          applyFilter();
+        }, 250);
+      });
+
+      clearSearchBtn?.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchTerm = '';
+        clearSearchBtn?.classList.add('hidden');
+        applyFilter();
+        searchInput?.focus();
+      });
+
+      // populate city dropdown
+      function populateCityFilter() {
+        const select = document.getElementById('city-filter');
+        const clearBtn = document.getElementById('clear-city');
+        if (!select) return;
+        const cities = Array.from(new Set(pharmacies.map(ph => (ph.ville || ph.city || '').toString().trim()).filter(Boolean)));
+        // clear and add default
+        select.innerHTML = '<option value="">All cities</option>' + cities.sort((a, b) => a.localeCompare(b)).map(c => `<option value="${c.toLowerCase()}">${c}</option>`).join('');
+        // keep selection if exists
+        if (selectedCity) select.value = selectedCity;
+        // toggle clear button visibility
+        if (clearBtn) {
+          if (selectedCity) clearBtn.classList.remove('hidden'); else clearBtn.classList.add('hidden');
+        }
+      }
+
+      const citySelect = document.getElementById('city-filter');
+      const clearCityBtn = document.getElementById('clear-city');
+      citySelect?.addEventListener('change', (e) => {
+        selectedCity = (e.target.value || '').toLowerCase();
+        if (selectedCity) clearCityBtn?.classList.remove('hidden'); else clearCityBtn?.classList.add('hidden');
+        applyFilter();
+      });
+      clearCityBtn?.addEventListener('click', () => {
+        if (citySelect) citySelect.value = '';
+        selectedCity = '';
+        clearCityBtn?.classList.add('hidden');
+        applyFilter();
+        citySelect?.focus();
+      });
+
+      // Details modal
+      function openModal(ph) {
+        if (!ph) return;
+        document.getElementById('modal-title').textContent = ph.nom || ph.name || 'Pharmacy';
+        document.getElementById('modal-image').src = ph.image || '/images/icons/pharma_icon2.png';
+        document.getElementById('modal-address').innerHTML = `<strong>Address:</strong> ${[ph.adresse, ph.ville, ph.address, ph.city].filter(Boolean).join(', ')}`;
+        document.getElementById('modal-phone').innerHTML = `<strong>Phone:</strong> ${ph.telephone || ph.phone || 'N/A'}`;
+        document.getElementById('modal-schedule').innerHTML = `<strong>Hours:</strong> ${ph.horaire || ph.schedule || 'N/A'}`;
+        document.getElementById('modal-extra').innerHTML = `<strong>Guard:</strong> ${ph.garde || ph.guard ? 'Yes' : 'No'} · <strong>Delivery:</strong> ${ph.livraison || ph.delivery ? 'Yes' : 'No'} · <strong>Status:</strong> ${ph.statut || ph.status || 'unknown'}`;
+        document.getElementById('pharmacy-modal').classList.remove('hidden');
+        document.getElementById('pharmacy-modal').classList.add('flex');
+      }
+      function closeModal() {
+        document.getElementById('pharmacy-modal').classList.add('hidden');
+        document.getElementById('pharmacy-modal').classList.remove('flex');
+      }
+      document.getElementById('modal-close')?.addEventListener('click', closeModal);
+      document.getElementById('modal-close-2')?.addEventListener('click', closeModal);
+      document.getElementById('pharmacy-modal')?.addEventListener('click', (e) => { if (e.target.id === 'pharmacy-modal') closeModal(); });
+
+      // Authentication-aware UI and handlers
+      let isAuthenticated = false;
+      const addBtn = document.getElementById('add-pharmacy');
+      const loginBtn = document.getElementById('login-btn');
+      const registerBtn = document.getElementById('register-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const userBadge = document.getElementById('user-badge');
+
+      function updateAuthUI(auth, user) {
+        isAuthenticated = !!auth;
+        if (isAuthenticated) {
+          addBtn?.classList.remove('hidden');
+          logoutBtn?.classList.remove('hidden');
+          loginBtn?.classList.add('hidden');
+          registerBtn?.classList.add('hidden');
+          if (user?.email) { userBadge.textContent = user.name; userBadge?.classList.remove('hidden'); }
+          document.querySelectorAll('.auth-only').forEach(e => e.classList.remove('hidden'));
+        } else {
+          addBtn?.classList.add('hidden');
+          logoutBtn?.classList.add('hidden');
+          loginBtn?.classList.remove('hidden');
+          registerBtn?.classList.remove('hidden');
+          userBadge?.classList.add('hidden');
+          document.querySelectorAll('.auth-only').forEach(e => e.classList.add('hidden'));
+        }
+      }
+
+      function checkAuth() {
+        fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' })
+          .then(r => {
+            if (!r.ok) { updateAuthUI(false); return; }
+            return r.json();
+          })
+          .then(data => {
+            if (data?.authenticated) updateAuthUI(true, data.user);
+            else updateAuthUI(false);
+          })
+          .catch(() => updateAuthUI(false));
+      }
+
+      // Open/close pharmacy form modal
+      function openPharmacyForm(mode = 'create', ph = null) {
+        const modal = document.getElementById('pharmacy-form-modal');
+        document.getElementById('form-modal-title').textContent = mode === 'edit' ? 'Edit Pharmacy' : 'Add Pharmacy';
+        document.getElementById('pharmacy-id').value = ph?.id || '';
+        document.getElementById('ph-name').value = ph?.name || ph?.nom || '';
+        document.getElementById('ph-city').value = ph?.city || ph?.ville || '';
+        document.getElementById('ph-address').value = ph?.address || ph?.adresse || '';
+        document.getElementById('ph-phone').value = ph?.phone || ph?.telephone || '';
+        document.getElementById('ph-schedule').value = ph?.schedule || ph?.horaire || '';
+        document.getElementById('ph-status').value = (ph?.status || ph?.statut || '').toString();
+        document.getElementById('ph-guard').checked = !!(ph?.guard || ph?.garde);
+        document.getElementById('ph-delivery').checked = !!(ph?.delivery || ph?.livraison);
+        document.getElementById('ph-image').value = ph?.image || '';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      function closePharmacyForm() {
+        const modal = document.getElementById('pharmacy-form-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      document.getElementById('form-modal-close')?.addEventListener('click', closePharmacyForm);
+      document.getElementById('ph-form-cancel')?.addEventListener('click', closePharmacyForm);
+
+      // submit add/edit pharmacy
+      document.getElementById('pharmacy-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('pharmacy-id').value;
+        const payload = {
+          name: document.getElementById('ph-name').value.trim(),
+          city: document.getElementById('ph-city').value.trim(),
+          address: document.getElementById('ph-address').value.trim(),
+          phone: document.getElementById('ph-phone').value.trim(),
+          schedule: document.getElementById('ph-schedule').value.trim(),
+          status: document.getElementById('ph-status').value,
+          guard: document.getElementById('ph-guard').checked,
+          delivery: document.getElementById('ph-delivery').checked,
+          image: document.getElementById('ph-image').value.trim() || null
+        };
+        try {
+          let res;
+          if (id) {
+            res = await fetch(`${API_BASE_URL}/pharmacy/${id}`, { method: 'PATCH', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          } else {
+            res = await fetch(`${API_BASE_URL}/pharmacy`, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          }
+          if (!res.ok) throw new Error('Failed');
+          closePharmacyForm();
+          load();
+        } catch (err) {
+          alert('Error saving pharmacy. Make sure you are authenticated.');
+          console.error(err);
+        }
+      });
+
+      // delete
+      async function deletePharmacy(id) {
+        if (!confirm('Delete this pharmacy?')) return;
+        try {
+          const res = await fetch(`${API_BASE_URL}/pharmacy/${id}`, { method: 'DELETE', credentials: 'include' });
+          if (!res.ok) throw new Error('Delete failed');
+          load();
+        } catch (err) {
+          alert('Error deleting pharmacy. Make sure you are authenticated.');
+          console.error(err);
+        }
+      }
+
+      // Details / Edit / Delete delegation
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.details-btn');
+        if (btn) {
+          const id = btn.getAttribute('data-id');
+          const ph = pharmacies.find(p => String(p.id) === String(id));
+          openModal(ph);
+          return;
+        }
+        const editBtn = e.target.closest('.edit-btn');
+        if (editBtn) {
+          const id = editBtn.getAttribute('data-id');
+          const ph = pharmacies.find(p => String(p.id) === String(id));
+          openPharmacyForm('edit', ph);
+          return;
+        }
+        const delBtn = e.target.closest('.delete-btn');
+        if (delBtn) {
+          const id = delBtn.getAttribute('data-id');
+          deletePharmacy(id);
+          return;
+        }
+      });
+
+      // Login / Register / Logout flows
+      function openLoginModal() { document.getElementById('login-modal')?.classList.remove('hidden'); document.getElementById('login-modal')?.classList.add('flex'); }
+      function closeLoginModal() { document.getElementById('login-modal')?.classList.add('hidden'); document.getElementById('login-modal')?.classList.remove('flex'); }
+      function openRegisterModal() { document.getElementById('register-modal')?.classList.remove('hidden'); document.getElementById('register-modal')?.classList.add('flex'); }
+      function closeRegisterModal() { document.getElementById('register-modal')?.classList.add('hidden'); document.getElementById('register-modal')?.classList.remove('flex'); }
+
+      loginBtn?.addEventListener('click', openLoginModal);
+      registerBtn?.addEventListener('click', openRegisterModal);
+      document.getElementById('login-close')?.addEventListener('click', closeLoginModal);
+      document.getElementById('login-cancel')?.addEventListener('click', closeLoginModal);
+      document.getElementById('register-close')?.addEventListener('click', closeRegisterModal);
+      document.getElementById('register-cancel')?.addEventListener('click', closeRegisterModal);
+
+      document.getElementById('login-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+        try {
+          const res = await fetch(`${API_BASE_URL}/auth/login`, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+          if (!res.ok) throw new Error('Login failed');
+          closeLoginModal();
+          checkAuth();
+        } catch (err) { alert('Login failed'); }
+      });
+
+      document.getElementById('register-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('reg-name').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-password').value;
+        try {
+          const res = await fetch(`${API_BASE_URL}/auth/register`, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password }) });
+          if (!res.ok) throw new Error('Register failed');
+          closeRegisterModal();
+          // auto-login
+          await fetch(`${API_BASE_URL}/auth/login`, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+          checkAuth();
+        } catch (err) { alert('Register failed'); }
+      });
+
+      logoutBtn?.addEventListener('click', async () => {
+        await fetch(`${API_BASE_URL}/logout`, { method: 'POST', credentials: 'include' });
+        checkAuth();
+      });
+
+      addBtn?.addEventListener('click', () => openPharmacyForm('create'));
+
+      checkAuth();
+      load();
     });
-
-    checkAuth();
-    load();
-  });
-</script>
+  </script>
 </body>
+
 </html>

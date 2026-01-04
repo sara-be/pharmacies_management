@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors'); // Added cors
 const pool = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -8,6 +9,10 @@ const cookieParser = require('cookie-parser');
 
 
 app.use(cookieParser());
+app.use(cors({      // Added cors middleware
+  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:4000'],
+  credentials: true
+}));
 const staticPath = path.join(__dirname, '..', 'public');
 app.use(express.static(staticPath));
 app.use(express.json());  
@@ -79,8 +84,15 @@ const authMiddleWare=(req, res, next)=>{
 };
 
 // Return current authenticated user
-app.get('/auth/me', authMiddleWare, (req, res) => {
-  res.json({ authenticated: true, user: req.user });
+app.get('/auth/me', authMiddleWare, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT id, name, email FROM users WHERE id = $1', [req.user.id]);
+    const user = result.rows[0];
+    if (!user) return res.status(404).json({ authenticated: false, message: 'User not found' });
+    res.json({ authenticated: true, user });
+  } catch (err) {
+    res.status(500).json({ authenticated: false, message: err.message });
+  }
 });
 
 

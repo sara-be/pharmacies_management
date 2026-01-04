@@ -16,11 +16,32 @@
         <img src="/images/icons/pharma_icon2.png" alt="Logo" class="h-10 w-10">
         <span class="font-semibold text-lg text-white">Pharmacies</span>
       </a>
-      <nav class="hidden md:flex gap-6">
-        <a href="/" class="text-white hover:text-emerald-200">Home</a>
-        <a href="/about" class="text-white hover:text-emerald-200">About</a>
-        <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
-      </nav>
+      <nav class="hidden md:flex gap-6 mx-auto">
+          <a href="/" class="text-white hover:text-emerald-200">Home</a>
+          <a href="/about" class="text-white hover:text-emerald-200">About</a>
+          <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <div class="hidden md:flex items-center gap-2">
+            <button id="login-btn"
+              class="inline-flex items-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white">Login</button>
+            <button id="register-btn"
+              class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Sign
+              up</button>
+            <button id="logout-btn"
+              class="hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 px-3 py-1 rounded-md hover:bg-rose-50">Logout</button>
+            <span id="user-badge" class="hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
+          </div>
+          <div class="md:hidden">
+            <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80"
+              aria-label="Toggle navigation">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
       <div class="md:hidden">
         <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80" aria-label="Toggle navigation">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
