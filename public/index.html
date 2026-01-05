@@ -29,8 +29,10 @@
           <a href="/about" class="text-white hover:text-emerald-200">About</a>
           <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
         </nav>
-
         <div class="flex items-center gap-3">
+            <div class="md:flex items-center gap-2">
+                <button id="extract-pharmacies-btn" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Extract Pharmacies</button>
+            </div>
           <div class="hidden md:flex items-center gap-2">
             <button id="login-btn"
               class="inline-flex items-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white">Login</button>
@@ -193,6 +195,30 @@
           <div class="md:col-span-2 flex items-center justify-end gap-2 mt-4">
             <button type="button" id="ph-form-cancel" class="px-3 py-1 rounded border">Cancel</button>
             <button type="submit" id="ph-form-save" class="px-4 py-2 rounded bg-emerald-600 text-white">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Extract Pharmacies Form -->
+    <div id="extract-pharmacies-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-full max-w-md mx-4 overflow-hidden shadow">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h3 class="text-lg font-semibold text-emerald-700">Extract Pharmacies from web</h3>
+          <button id="extract-pharmacies-close" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+        <form id="extract-pharmacies-form" class="p-4 space-y-3">
+          <div>
+            <label class="text-sm">City</label>
+            <input id="extract-pharmacies-city" required type="text" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div>
+            <label class="text-sm">Number of pharmacies</label>
+            <input id="extract-pharmacies-leads" required type="number" min="1" max="20" placeholder="Max is 20" class="mt-1 w-full px-3 py-2 border rounded-md" />
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" id="extract-pharmacies-cancel" class="px-3 py-1 rounded border">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded bg-emerald-600 text-white">Extract</button>
           </div>
         </form>
       </div>
@@ -676,6 +702,10 @@
       });
 
       addBtn?.addEventListener('click', () => openPharmacyForm('create'));
+      
+      // pharmacies scrapping
+      const scrapeBtn = document.getElementById('scrape-pharmacies');
+      scrapeBtn?.addEventListener('click', async () => {});
 
       checkAuth();
       load();
