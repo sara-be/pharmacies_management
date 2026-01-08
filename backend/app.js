@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 
 app.use(cookieParser());
 app.use(cors({      // Added cors middleware
-  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:4000'],
+  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:4000', 'https://pharmacies-management.vercel.app/'],
   credentials: true
 }));
 const staticPath = path.join(__dirname, '..', 'public');

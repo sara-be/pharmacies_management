@@ -1,66 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/images/icons/pharma_icon2.png">
-    <title>Contact Us</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/icons/pharma_icon2.png">
+  <title>Contact Us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen w-full bg-white relative text-gray-800">
-  <div class="fixed inset-0 z-0" style="background-image: radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #10b981 100%); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;"></div>
-<header class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-50">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="flex items-center justify-between h-16">
-      <a href="/" class="flex items-center gap-3">
-        <img src="/images/icons/pharma_icon2.png" alt="Logo" class="h-10 w-10">
-        <span class="font-semibold text-lg text-white">Pharmacies</span>
-      </a>
-      <nav class="hidden md:flex gap-6 mx-auto">
+  <div class="fixed inset-0 z-0"
+    style="background-image: radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #10b981 100%); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
+  </div>
+  <header
+    class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/images/icons/pharma_icon2.png" alt="Logo" class="h-10 w-10">
+          <span class="font-semibold text-lg text-white">Pharmacies</span>
+        </a>
+        <nav class="hidden md:flex gap-6 mx-auto">
           <a href="/" class="text-white hover:text-emerald-200">Home</a>
           <a href="/about" class="text-white hover:text-emerald-200">About</a>
           <a href="/contact" class="text-white hover:text-emerald-200">Contact</a>
         </nav>
-        <div class="flex items-center gap-3">
-          <div class="hidden md:flex items-center gap-2">
-            <button id="login-btn"
-              class="inline-flex items-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white">Login</button>
-            <button id="register-btn"
-              class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Sign
-              up</button>
-            <button id="logout-btn"
-              class="hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 px-3 py-1 rounded-md hover:bg-rose-50">Logout</button>
-            <span id="user-badge" class="hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
+        <div class="hidden md:flex items-center gap-2">
+          <button id="login-btn"
+            class="inline-flex items-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white">Login</button>
+          <button id="register-btn"
+            class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Sign
+            up</button>
+          <button id="logout-btn"
+            class="hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 px-3 py-1 rounded-md hover:bg-rose-50">Logout</button>
+          <span id="user-badge" class="hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
+        </div>
+        <div class="md:hidden ml-auto">
+          <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80"
+            aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile side panel (hidden off-canvas by default) + backdrop -->
+      <div id="mobile-backdrop" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-40"></div>
+      <nav id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu" tabindex="-1"
+        class="md:hidden fixed top-0 right-0 h-screen w-3/5 max-w-xs bg-white/80 backdrop-blur-lg p-4 z-50 translate-x-full transform transition-transform shadow-lg rounded-l"
+        style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3 mt-4">
+            <img src="/images/icons/pharma_icon2.png" alt="Logo" class="h-8 w-8">
+            <span class="font-semibold text-emerald-700">Pharmacies</span>
           </div>
-          <div class="md:hidden">
-            <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80"
-              aria-label="Toggle navigation">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+          <button id="mobile-close" class="text-gray-600">✕</button>
+        </div>
+        <div class="mb-4">
+          <a href="/" class="block py-2 text-emerald-700 hover:text-emerald-900 mobile-link">Home</a>
+          <a href="/about" class="block py-2 text-emerald-700 hover:text-emerald-900 mobile-link">About</a>
+          <a href="/contact" class="block py-2 text-emerald-700 hover:text-emerald-900 mobile-link">Contact</a>
+        </div>
+        <div class="mt-auto">
+          <div class="flex flex-col gap-2">
+            <button id="mobile-login-btn"
+              class="non-auth inline-flex items-center justify-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white w-full">Login</button>
+            <button id="mobile-register-btn"
+              class="non-auth inline-flex items-center justify-center gap-2 bg-white text-emerald-700 border border-emerald-600 px-3 py-1 rounded-md hover:bg-emerald-50 w-full">Sign
+              up</button>
+            <button id="mobile-logout-btn"
+              class="auth-only hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 px-3 py-1 rounded-md hover:bg-rose-50">Logout</button>
+            <span id="mobile-user-badge"
+              class="auth-only hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
           </div>
         </div>
-      <div class="md:hidden">
-        <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80" aria-label="Toggle navigation">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
+      </nav>
     </div>
-    <nav id="mobile-menu" class="md:hidden hidden pb-4 bg-emerald-50/80 rounded-b">
-      <a href="/" class="block py-2 text-emerald-700 hover:text-emerald-900">Home</a>
-      <a href="/about" class="block py-2 text-emerald-700 hover:text-emerald-900">About</a>
-      <a href="/contact" class="block py-2 text-emerald-700 hover:text-emerald-900">Contact</a>
-    </nav>
-  </div>
-</header>
+  </header>
 
-<main class="relative z-10 max-w-6xl mx-auto px-4 pt-28">
+  <main class="relative z-10 max-w-6xl mx-auto px-4 pt-28">
     <h1 class="text-3xl font-bold mb-4 text-emerald-700">Contact Us</h1>
-    <p class="text-gray-700 mb-6">Have questions or need help? Fill the form below or email us at <a href="mailto:info@example.com" class="text-emerald-600">info@example.com</a>.</p>
+    <p class="text-gray-700 mb-6">Have questions or need help? Fill the form below or email us at <a
+        href="mailto:info@example.com" class="text-emerald-600">info@example.com</a>.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <form id="contact-form" class="space-y-4 bg-white/90 p-6 rounded shadow">
@@ -84,73 +107,162 @@
 
       <div class="bg-white/90 p-6 rounded shadow">
         <h3 class="font-semibold text-emerald-700 mb-2">Our Office</h3>
-        <p class="text-sm text-gray-700">123 Pharmacy St.<br/>City, Country<br/>Phone: +1 555-0100</p>
+        <p class="text-sm text-gray-700">123 Pharmacy St.<br />City, Country<br />Phone: +1 555-0100</p>
         <h3 class="font-semibold text-emerald-700 mt-4 mb-2">Support Hours</h3>
         <p class="text-sm text-gray-700">Mon-Fri 9:00 - 17:00</p>
       </div>
     </div>
-</main>
+  </main>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const API_BASE_URL = (window.location.protocol === 'file:' || window.location.port === '5500') ? 'http://localhost:4000' : '';
-    const btn = document.getElementById('nav-toggle');
-    const menu = document.getElementById('mobile-menu');
-    btn?.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const API_BASE_URL = (window.location.protocol === 'file:' || window.location.port === '5500') ? 'http://localhost:4000' : '';
 
-    const loginBtn = document.getElementById('login-btn');
-    const registerBtn = document.getElementById('register-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const userBadge = document.getElementById('user-badge');
+      // Mobile Menu Logic
+      const btn = document.getElementById('nav-toggle');
+      const menu = document.getElementById('mobile-menu');
+      const mobileBackdrop = document.getElementById('mobile-backdrop');
+      const mobileCloseBtn = document.getElementById('mobile-close');
 
-    function updateAuthUI(auth, user) {
-      if (auth) {
-        logoutBtn?.classList.remove('hidden');
-        loginBtn?.classList.add('hidden');
-        registerBtn?.classList.add('hidden');
-        if (user?.name) { userBadge.textContent = user.name; userBadge?.classList.remove('hidden'); }
-        document.querySelectorAll('.auth-only').forEach(e => e.classList.remove('hidden'));
-      } else {
-        logoutBtn?.classList.add('hidden');
-        loginBtn?.classList.remove('hidden');
-        registerBtn?.classList.remove('hidden');
-        userBadge?.classList.add('hidden');
-        document.querySelectorAll('.auth-only').forEach(e => e.classList.add('hidden'));
+      let lastFocusedElement = null;
+      let mobileKeydownHandler = null;
+      let touchStartX = 0, touchStartY = 0;
+
+      function handleTouchStart(e) {
+        const t = e.touches[0];
+        touchStartX = t.clientX;
+        touchStartY = t.clientY;
       }
-    }
+      function handleTouchEnd(e) {
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+        if (dx > 50 && Math.abs(dy) < 75) { closeMobileMenu(); }
+      }
 
-    function checkAuth() {
-      fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' })
-        .then(r => { if (!r.ok) { updateAuthUI(false); return; } return r.json(); })
-        .then(data => { if (data?.authenticated) updateAuthUI(true, data.user); else updateAuthUI(false); })
-        .catch(() => updateAuthUI(false));
-    }
+      function openMobileMenu() {
+        lastFocusedElement = document.activeElement;
+        menu?.classList.remove('translate-x-full');
+        mobileBackdrop?.classList.remove('hidden');
+        menu?.setAttribute('aria-hidden', 'false');
+        mobileBackdrop?.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+        const focusable = menu?.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])');
+        if (focusable && focusable.length) focusable[0].focus();
 
-    logoutBtn?.addEventListener('click', async () => {
-      await fetch(`${API_BASE_URL}/logout`, { method: 'POST', credentials: 'include' });
+        mobileKeydownHandler = (e) => {
+          if (e.key === 'Escape') { closeMobileMenu(); }
+          if (e.key === 'Tab') {
+            const nodes = Array.from(menu.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])')).filter(el => !el.hasAttribute('disabled'));
+            if (!nodes.length) { e.preventDefault(); return; }
+            const first = nodes[0];
+            const last = nodes[nodes.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          }
+        };
+        document.addEventListener('keydown', mobileKeydownHandler);
+        menu?.addEventListener('touchstart', handleTouchStart, { passive: true });
+        menu?.addEventListener('touchend', handleTouchEnd, { passive: true });
+      }
+
+      function closeMobileMenu() {
+        menu?.classList.add('translate-x-full');
+        mobileBackdrop?.classList.add('hidden');
+        menu?.setAttribute('aria-hidden', 'true');
+        mobileBackdrop?.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('overflow-hidden');
+        if (mobileKeydownHandler) { document.removeEventListener('keydown', mobileKeydownHandler); mobileKeydownHandler = null; }
+        menu?.removeEventListener('touchstart', handleTouchStart);
+        menu?.removeEventListener('touchend', handleTouchEnd);
+        try { if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus(); } catch (err) { }
+      }
+
+      btn?.addEventListener('click', openMobileMenu);
+      mobileCloseBtn?.addEventListener('click', closeMobileMenu);
+      mobileBackdrop?.addEventListener('click', closeMobileMenu);
+      document.querySelectorAll('#mobile-menu .mobile-link').forEach(a => a.addEventListener('click', closeMobileMenu));
+
+      // Auth Logic
+      const loginBtn = document.getElementById('login-btn');
+      const registerBtn = document.getElementById('register-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const userBadge = document.getElementById('user-badge');
+
+      function updateAuthUI(auth, user) {
+        const mobileLogin = document.getElementById('mobile-login-btn');
+        const mobileRegister = document.getElementById('mobile-register-btn');
+        const mobileLogout = document.getElementById('mobile-logout-btn');
+        const mobileUserBadge = document.getElementById('mobile-user-badge');
+
+        if (auth) {
+          logoutBtn?.classList.remove('hidden');
+          loginBtn?.classList.add('hidden');
+          registerBtn?.classList.add('hidden');
+          mobileLogout?.classList.remove('hidden');
+          mobileLogin?.classList.add('hidden');
+          mobileRegister?.classList.add('hidden');
+          mobileUserBadge?.classList.remove('hidden');
+
+          if (user?.name) {
+            userBadge.textContent = user.name; userBadge?.classList.remove('hidden');
+            mobileUserBadge.textContent = user.name;
+          }
+          document.querySelectorAll('.auth-only').forEach(e => e.classList.remove('hidden'));
+        } else {
+          logoutBtn?.classList.add('hidden');
+          loginBtn?.classList.remove('hidden');
+          registerBtn?.classList.remove('hidden');
+          mobileLogout?.classList.add('hidden');
+          mobileLogin?.classList.remove('hidden');
+          mobileRegister?.classList.remove('hidden');
+          mobileUserBadge?.classList.add('hidden');
+          userBadge?.classList.add('hidden');
+          document.querySelectorAll('.auth-only').forEach(e => e.classList.add('hidden'));
+        }
+      }
+
+      function checkAuth() {
+        fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' })
+          .then(r => { if (!r.ok) { updateAuthUI(false); return; } return r.json(); })
+          .then(data => { if (data?.authenticated) updateAuthUI(true, data.user); else updateAuthUI(false); })
+          .catch(() => updateAuthUI(false));
+      }
+
+      const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+      async function handleLogout() {
+        await fetch(`${API_BASE_URL}/logout`, { method: 'POST', credentials: 'include' });
+        checkAuth();
+        closeMobileMenu();
+      }
+
+      logoutBtn?.addEventListener('click', handleLogout);
+      mobileLogoutBtn?.addEventListener('click', handleLogout);
+
+      loginBtn?.addEventListener('click', () => { window.location.href = '/'; });
+      registerBtn?.addEventListener('click', () => { window.location.href = '/'; });
+
+      document.getElementById('mobile-login-btn')?.addEventListener('click', () => { window.location.href = '/'; });
+      document.getElementById('mobile-register-btn')?.addEventListener('click', () => { window.location.href = '/'; });
+
+      // contact form handling (client-side only)
+      const contactForm = document.getElementById('contact-form');
+      const statusEl = document.getElementById('contact-status');
+      contactForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contact-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const msg = document.getElementById('contact-message').value.trim();
+        if (!name || !email || !msg) { statusEl.textContent = 'Please fill all fields'; statusEl.className = 'text-rose-600'; return; }
+        if (!/\S+@\S+\.\S+/.test(email)) { statusEl.textContent = 'Please enter a valid email'; statusEl.className = 'text-rose-600'; return; }
+        // Simulate sending (no backend); show success and clear
+        statusEl.textContent = 'Message sent. We will contact you soon.'; statusEl.className = 'text-emerald-600';
+        contactForm.reset();
+      });
+
       checkAuth();
     });
-
-    loginBtn?.addEventListener('click', () => { window.location.href = '/'; });
-    registerBtn?.addEventListener('click', () => { window.location.href = '/'; });
-
-    // contact form handling (client-side only)
-    const contactForm = document.getElementById('contact-form');
-    const statusEl = document.getElementById('contact-status');
-    contactForm?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('contact-name').value.trim();
-      const email = document.getElementById('contact-email').value.trim();
-      const msg = document.getElementById('contact-message').value.trim();
-      if (!name || !email || !msg) { statusEl.textContent = 'Please fill all fields'; statusEl.className = 'text-rose-600'; return; }
-      if (!/\S+@\S+\.\S+/.test(email)) { statusEl.textContent = 'Please enter a valid email'; statusEl.className = 'text-rose-600'; return; }
-      // Simulate sending (no backend); show success and clear
-      statusEl.textContent = 'Message sent. We will contact you soon.'; statusEl.className = 'text-emerald-600';
-      contactForm.reset();
-    });
-
-    checkAuth();
-  });
-</script>
+  </script>
 </body>
+
 </html>
