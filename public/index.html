@@ -7,6 +7,14 @@
     <link rel="icon" type="image/png" href="/images/icons/pharma_icon2.png">
     <title>Pharmacies Management System</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init ts ns yi rs os Qr es capture Hi calculateEventProperties hs register register_once register_for_session unregister unregister_for_session fs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty vs us createPersonProfile cs Yr ps opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing ls debug O ds getPageViewId captureTraceFeedback captureTraceMetric Vr".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_R2FnCIaSAD3Wnbx2rGMDStQW0Oc0NPFGrm1dBEyWwAi', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2025-11-30',
+        person_profiles: 'always',
+    })
+    </script>
 </head>
 
 <body class="min-h-screen w-full bg-white relative text-gray-800">
@@ -14,7 +22,7 @@
         style="background-image: radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #10b981 100%); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
     </div>
     <header id="site-header"
-        class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-50">
+        class="fixed top-0 left-0 right-0 bg-emerald-600/20 text-white backdrop-blur-lg border-b border-white/20 shadow-sm z-30">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex items-center h-16 w-full">
                 <div class="flex items-center gap-3">
@@ -32,7 +40,7 @@
                 <div class="flex items-center gap-3">
                     <div class="md:flex items-center gap-2">
                         <button id="extract-pharmacies-btn"
-                            class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Extract
+                            class="hidden md:inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Extract
                             Pharmacies</button>
                     </div>
                     <div class="hidden md:flex items-center gap-2">
@@ -46,23 +54,23 @@
                         <span id="user-badge"
                             class="hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
                     </div>
-                    <div class="md:hidden">
-                        <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80"
-                            aria-label="Toggle navigation">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
+                </div>
+                <div class="md:hidden ml-auto">
+                    <button id="nav-toggle" class="p-2 rounded-md text-white hover:bg-emerald-500/80"
+                        aria-label="Toggle navigation">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
             </div>
             <!-- Mobile side panel (hidden off-canvas by default) + backdrop -->
-            <div id="mobile-backdrop" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-50"></div>
-            <nav id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu" tabindex="-1" class="md:hidden fixed top-0 right-0 h-screen w-3/5 max-w-xs bg-white/80 backdrop-blur-lg p-4 z-60 translate-x-full transform transition-transform shadow-lg rounded-l" style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);">
+            <div id="mobile-backdrop" class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-40"></div>
+            <nav id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile menu" tabindex="-1" class="md:hidden fixed top-0 right-0 h-screen w-3/5 max-w-xs bg-white/80 backdrop-blur-lg p-4 z-50 translate-x-full transform transition-transform shadow-lg rounded-l" style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 mt-4">
                         <img src="/images/icons/pharma_icon2.png" alt="Logo" class="h-8 w-8">
                         <span class="font-semibold text-emerald-700">Pharmacies</span>
                     </div>
@@ -72,11 +80,14 @@
                     <a href="/" class="block py-2 text-emerald-700 hover:text-emerald-900 mobile-link">Home</a>
                     <a href="/about" class="block py-2 text-emerald-700 hover:text-emerald-900 mobile-link">About</a>
                     <a href="/contact" class="block py-2 text-emerald-700 hover:text-emerald-900 mobile-link">Contact</a>
+                    <div class="mt-3">
+                      <button id="mobile-extract-btn" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-2 rounded-md hover:bg-emerald-700 w-full">Extract Pharmacies</button>
+                    </div>
                 </div>
                 <div class="mt-auto">
                     <div class="flex flex-col gap-2">
-                        <button id="mobile-login-btn" class="non-auth inline-flex items-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white">Login</button>
-                        <button id="mobile-register-btn" class="non-auth inline-flex items-center gap-2 bg-emerald-600 text-white px-3 py-1 rounded-md hover:bg-emerald-700">Sign up</button>
+                        <button id="mobile-login-btn" class="non-auth inline-flex items-center justify-center gap-2 bg-white/90 text-emerald-700 px-3 py-1 rounded-md hover:bg-white w-full">Login</button>
+                        <button id="mobile-register-btn" class="non-auth inline-flex items-center justify-center gap-2 bg-white text-emerald-700 border border-emerald-600 px-3 py-1 rounded-md hover:bg-emerald-50 w-full">Sign up</button>
                         <button id="mobile-logout-btn" class="auth-only hidden inline-flex items-center gap-2 bg-transparent text-rose-600 border border-rose-600 px-3 py-1 rounded-md hover:bg-rose-50">Logout</button>
                         <span id="mobile-user-badge" class="auth-only hidden text-sm px-2 py-1 rounded bg-emerald-700 text-white/90"></span>
                     </div>
@@ -104,25 +115,26 @@
                 <div class="flex-1 max-w-xl">
                     <label for="search" class="sr-only">Search pharmacies</label>
                     <div class="relative">
-                        <input id="search" type="search" aria-label="Search pharmacies"
-                            placeholder="Search by name or address "
-                            class="w-full pl-12 pr-14 py-3 rounded-full bg-white/95 shadow-sm focus:shadow-md transition focus:outline-none focus:ring-2 focus:ring-emerald-300 placeholder-gray-500" />
-
-                        <div class="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                            <span id="search-count"
-                                class="ml-2 text-xs bg-emerald-600 text-white px-2 py-0.5 rounded hidden">0</span>
+                        <input id="search" type="search" aria-label="Search pharmacies" placeholder="Search by name or address" class="w-full pl-12 pr-4 py-2.5 rounded-full bg-white border border-white/30 shadow-sm text-sm transition focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300 placeholder-gray-500" />
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 16.65z"/>
+                            </svg>
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-3 sm:mt-0 flex items-center gap-2">
                     <label for="city-filter" class="sr-only">Filter by city</label>
-                    <select id="city-filter"
-                        class="min-w-[160px] bg-white/95 px-3 py-2 rounded-md border border-white/30 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-300">
-                        <option value="">All cities</option>
-                    </select>
-                    <button id="clear-city"
-                        class="hidden text-sm px-2 py-1 rounded bg-white/90 border text-gray-700 hover:bg-gray-100">Clear</button>
+                    <div class="relative">
+                        <select id="city-filter" class="min-w-[160px] bg-white border border-white/30 px-3 py-2 rounded-md shadow-sm text-sm transition focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300 appearance-none pr-8">
+                            <option value="">All cities</option>
+                        </select>
+                        <svg class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <button id="clear-city" class="hidden text-sm px-2 py-1 rounded bg-white/90 border text-gray-700 hover:bg-gray-100">Clear</button>
                 </div>
             </div>
         </div>
@@ -347,6 +359,9 @@
                 document.getElementById('site-header')?.classList.add('pointer-events-none');
                 document.getElementById('main-content')?.classList.add('blur-sm','pointer-events-none');
 
+                // ensure the menu itself remains interactive (it's inside the header in the DOM)
+                menu?.classList.add('pointer-events-auto');
+
                 document.body.classList.add('overflow-hidden');
 
                 // focus first focusable element in menu
@@ -381,6 +396,9 @@
                 // remove blur and re-enable interaction
                 document.getElementById('site-header')?.classList.remove('blur-sm','pointer-events-none');
                 document.getElementById('main-content')?.classList.remove('blur-sm','pointer-events-none');
+
+                // remove menu pointer-events override added on open
+                menu?.classList.remove('pointer-events-auto');
 
                 document.body.classList.remove('overflow-hidden');
                 if (mobileKeydownHandler) { document.removeEventListener('keydown', mobileKeydownHandler); mobileKeydownHandler = null; }
@@ -808,6 +826,8 @@
             document.getElementById('mobile-login-btn')?.addEventListener('click', () => { closeMobileMenu(); openLoginModal(); });
             document.getElementById('mobile-register-btn')?.addEventListener('click', () => { closeMobileMenu(); openRegisterModal(); });
             document.getElementById('mobile-logout-btn')?.addEventListener('click', async () => { closeMobileMenu(); await fetch(`${API_BASE_URL}/logout`, { method: 'POST', credentials: 'include' }); checkAuth(); });
+            // mobile extract button: open extract modal and close menu
+            document.getElementById('mobile-extract-btn')?.addEventListener('click', () => { closeMobileMenu(); openExtractModal(); });
 
             document.getElementById('login-close')?.addEventListener('click', closeLoginModal);
             document.getElementById('login-cancel')?.addEventListener('click', closeLoginModal);

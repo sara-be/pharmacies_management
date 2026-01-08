@@ -28,6 +28,7 @@ app.post('/auth/register', async (req, res) => {
   res.status(201).json({ message: 'Utilisateur créé', user: user.rows[0]});
 });
 
+
     //?Login
 app.post('/auth/login', async (req, res) => {
   const { email, password } = req.body;
