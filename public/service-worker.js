@@ -6,6 +6,8 @@ return cache.addAll([
 '/index.html',
 '/about.html',
 '/contact.html',
+'/manifest.json',
+'/icons/transparentBgLogo.png'
 ]);
 })
 );
